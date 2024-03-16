@@ -39,6 +39,10 @@ class UserController extends Controller
     {
         $users = User::query()->skip($offset)->take($limit)->get();
 
+        if(!empty($search)){
+            $users->where('name', 'like', '%'. $search. '%')
+            ->orWhere('email', 'like', '%' . $search . '%');
+        }
 
         return view('users.data', compact('users'));
     }
